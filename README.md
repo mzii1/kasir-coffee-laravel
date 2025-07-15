@@ -40,3 +40,11 @@ php artisan migrate
 
 # Jalankan server
 php artisan serve
+
+## 📸 Screenshot
+![Login](screenshots/login.jpeg)
+![Dashboard](screenshots/dashboard.jpeg)
+![Transaksi](screenshots/transaksi.jpeg)
+![Checkout](screenshots/checkout.jpeg)
+![Laporan](screenshots/laporan.jpeg)
+![Profile](screenshots/profile.jpeg)
