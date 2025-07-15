@@ -43,9 +43,9 @@ php artisan serve
 
 ## 📸 Screenshot
 
-![Login](screenshots/login.jpeg)
-![Dashboard](screenshots/dashboard.jpeg)
-![Transaksi](screenshots/transaksi.jpeg)
-![Checkout](screenshots/checkout.jpeg)
-![Laporan](screenshots/laporan.jpeg)
-![Profile](screenshots/profile.jpeg)
+![Login](screenshot/login.jpeg)
+![Dashboard](screenshot/dashboard.jpeg)
+![Transaksi](screenshot/transaksi.jpeg)
+![Checkout](screenshot/checkout.jpeg)
+![Laporan](screenshot/laporan.jpeg)
+![Profile](screenshot/profile.jpeg)
