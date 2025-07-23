@@ -23,12 +23,19 @@
 
     <button wire:click="konfirmasiPembayaran"
         class="w-full bg-green-700 text-white py-2 rounded hover:bg-green-800">
-        Confirm Payment
+        Konfirmasi Pembayaran
     </button>
 
     @if (session()->has('message'))
         <div class="mt-3 text-green-600 font-semibold">
             {{ session('message') }}
         </div>
+    @endif
+
+    @if ($transaksiId)
+        <a href="{{ route('struk.cetak', $transaksiId) }}" target="_blank"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mt-4 inline-block">
+            Cetak Struk
+        </a>
     @endif
 </div>

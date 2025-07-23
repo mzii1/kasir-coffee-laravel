@@ -229,6 +229,13 @@ class TransaksiController extends Controller
         return redirect()->back()->with('success', 'Jumlah item diperbarui.');
     }
 
+    public function cetakStruk($id){
+        $transaksi = Transaksi::with('items.menu')->findOrFail($id);
+
+        $pdf = Pdf::loadView('transaksi.struk', compact('transaksi'))->setPaper([0, 0, 226.77, 600], 'potrait');
+        return $pdf->stream('struk_transaksi.pdf');
+    }
+
 
 
 
