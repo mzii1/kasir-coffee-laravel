@@ -6,6 +6,7 @@ use App\Models\DetailTransaksi;
 use Livewire\Component;
 use App\Models\Transaksi;
 use App\Models\TransaksiDetail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CheckOutPage extends Component
@@ -19,6 +20,8 @@ class CheckOutPage extends Component
         $this->keranjang = session('keranjang', []);
         $this->total = session('total', 0);
     }
+
+    public $transaksiId;
 
     public function konfirmasiPembayaran()
     {
@@ -38,7 +41,10 @@ class CheckOutPage extends Component
                 'tanggal' => now(),
                 'metode' => strtoupper($this->metodePembayaran),
                 'total' => $this->total,
+                'user_id' => auth()->id(),
             ]);
+
+            $this->transaksiId = $transaksi->id;
 
             foreach ($this->keranjang as $item) {
                 DetailTransaksi::create([

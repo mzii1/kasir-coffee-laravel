@@ -13,12 +13,27 @@ use Illuminate\Support\Facades\Route;
 use Monolog\Handler\RotatingFileHandler;
 
 Route::get('/', function () {
-    return redirect('/dashboard');
+    return redirect('/login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard'); 
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified', 'role:admin'])->name('dashboard');
+
+// Rute untuk admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('dashboard', DashboardController::class);
+    Route::resource('users', UserController::class);
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
+});
+
+// Rute untuk kasir dan admin
+Route::middleware(['auth', 'role:kasir,admin'])->group(function () {
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+});
+
+// Rute untuk unauthorized access
+Route::get('/unauthorized', function () {
+    return response()->view('unauthorized', [], 403);
+})->name('unauthorized');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,10 +54,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
 
-    Route::get('/tailwind-demo', function () {
-        return view('tailwind-demo');
-    });
-
     Route::post('/keranjang/tambah', [TransaksiController::class, 'tambahKeranjang'])->name('keranjang.tambah');
 
     Route::delete('/keranjang/hapus/{id}', [TransaksiController::class, 'hapusKeranjang'])->name('keranjang.hapus');
@@ -51,12 +62,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/transaksi', TransaksiPage::class)->name('transaksi.index');
 
-    Route::get('/checkout', CheckOutPage::class)->name('checkout');
+
+    Route::get('/struk/{id}', [TransaksiController::class, 'cetakStruk'])->name('struk.cetak');
 
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('users', UserController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/checkout', CheckOutPage::class)->name('checkout');
 });
 
 Route::post('/logout', function () {
